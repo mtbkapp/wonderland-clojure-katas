@@ -4,10 +4,6 @@
 (def offset (int \a))
 (def alphabet-size 26)
 
-(defn- wordify
-  [char-seq]
-  (string/join char-seq))
-
 (defn index
   [c]
   (- (int c) offset))
@@ -18,7 +14,7 @@
 
 (defn- cipher-map 
   [keyword message f]
-  (wordify
+  (string/join
     (map f 
          (cycle (string/lower-case keyword)) 
          (string/lower-case message))))
@@ -49,14 +45,10 @@
   ([repeated-cipher n]
    (let [test-cipher (take n repeated-cipher)
          length (count repeated-cipher)]
-     (cond (> n length) nil
-           
-           )
-
      (if (and (not (> n length))
               (= repeated-cipher
                  (take length (cycle test-cipher))))
-       (wordify test-cipher)
+       (string/join test-cipher)
        (recur repeated-cipher (inc n))))))
 
 (defn decipher 
